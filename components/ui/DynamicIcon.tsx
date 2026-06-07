@@ -8,7 +8,7 @@ interface DynamicIconProps extends LucideProps {
 export function DynamicIcon({ name, ...props }: DynamicIconProps) {
   // Capitalize first letter to match Lucide export names
   const iconName = name.charAt(0).toUpperCase() + name.slice(1);
-  const Icon = (LucideIcons as Record<string, React.ComponentType<LucideProps>>)[
+  const Icon = (LucideIcons as unknown as Record<string, React.ComponentType<LucideProps>>)[
     iconName
   ];
 
