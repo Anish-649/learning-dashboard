@@ -1,21 +1,15 @@
-import * as LucideIcons from "lucide-react";
-import { LucideProps } from "lucide-react";
+import { icons } from "lucide-react";
+import { createElement } from "react";
 
-interface DynamicIconProps extends LucideProps {
+interface DynamicIconProps {
   name: string;
+  className?: string;
+  style?: React.CSSProperties;
+  size?: number;
 }
 
-export function DynamicIcon({ name, ...props }: DynamicIconProps) {
-  // Capitalize first letter to match Lucide export names
-  const iconName = name.charAt(0).toUpperCase() + name.slice(1);
-  const Icon = (LucideIcons as unknown as Record<string, React.ComponentType<LucideProps>>)[
-    iconName
-  ];
-
-  if (!Icon) {
-    const Fallback = LucideIcons.BookOpen;
-    return <Fallback {...props} />;
-  }
-
-  return <Icon {...props} />;
+export function DynamicIcon({ name, className, style, size = 20 }: DynamicIconProps) {
+  const iconName = name.charAt(0).toUpperCase() + name.slice(1) as keyof typeof icons;
+  const icon = icons[iconName] ?? icons["BookOpen"];
+  return createElement(icon, { className, style, size });
 }
